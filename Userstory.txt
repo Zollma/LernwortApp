@@ -1,0 +1,49 @@
+﻿Anforderungen an die LernwortApp
+•	Eingabe von Lernsets
+•	Lernwörter werden vorgelesen und müssen im Textfeld geschrieben werden 
+•	Jedes Lernwort muss dreimal richtig geschrieben worden sein, bevor es als gelernt anerkannt wird
+•	Die Lernwörter werden nach dem Zufallsprinip abgefragt.
+•	Anzeige aller gespeicherten Lernsets (Erstellerdatum, Bemerkung, Status, Erledigtdatum)
+•	Lernsets können ausgewählt werden, die zusammen gelernt werden sollen.
+•	Anzeige aller Lernwörter innerhalb eines Lernsets.
+
+Titel: ObjektOrientierung
+Story: Als Entwickler möchte ich die Anwendung objektorientiert entwickeltn, um später einfach weitere Funktionalitäten hinzufügen zu können.
+Akzeptanzkriterien:
+•	Die Aufteilung der Funktionalität auf Klassen folgt dem Prinzip Separation of Concerns(SoC)
+•	Bei der Erstellung von Klassen und Methoden wird das Prinzip Don´t Repeat Yourself (DRY) eingehalten
+Hinweis:
+•	Diese Story ist eine Erweiterung zu Story "Softwarestruktur"
+Status:
+•	
+
+Titel: Softwarestruktur
+Story: Als Entwickler möchte ich den Quellcode sauber strukturieren, um später einfach weitere Funktionalitäten hinzu fügen zu können.
+Akzeptanzkriterien:
+•	Das Single Level of Abstract Prinzip wird eingehalten, oder eine Abweichung ist begründet und dokumentiert.
+Status:
+•	
+•	
+
+Titel: Architektur
+Story: Die Anwendung wird in der Three-Tier Client-Server Struktur umgesetzt
+Akzeptanzkriterien:
+•	Es werden 3 Schichten umgesetzt. GUI- Layer, Application- Layer, Database- Layer
+Status:
+•	
+
+Titel: GUI- Layer
+Story: Die Presentationsschicht wird mit dem Windows-Form Framework umgesetzt
+Akzeptanzkriterien:
+•	
+Status:
+•	
+
+Titel: Database - Layer
+Story: Die Datenzugriffsschicht wird mit dem Zugriff auf eine Access-Datenbank umgesetzt
+Akzeptanzkriterien:
+•	
+Status:
+•	Implementiert
+•	Getestet
+•	Erledigt
