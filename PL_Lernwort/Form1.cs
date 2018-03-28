@@ -8,13 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PL_Lernword
+namespace PL_Lernwort
 {
-    public partial class Form1 : Form
+    public partial class Lernwort : Form
     {
-        public Form1()
+        private ManagerPanelDls mPanelDls = new ManagerPanelDls();
+
+        public Lernwort()
         {
             InitializeComponent();
+            mPanelDls.FillDataGridView(ref dgvLernsets);
+           
         }
     }
 }

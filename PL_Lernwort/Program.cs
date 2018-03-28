@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PL_Lernword
+namespace PL_Lernwort
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace PL_Lernword
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Lernwort());
         }
     }
 }

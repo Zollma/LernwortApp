@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PL_Lernword.Properties
+namespace PL_Lernwort.Properties
 {
 
 

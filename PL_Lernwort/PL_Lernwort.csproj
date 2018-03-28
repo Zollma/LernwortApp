@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{440DD1D6-4D9F-46F6-8499-E0CAC29E1DA8}</ProjectGuid>
+    <ProjectGuid>{FC86554C-AFA6-4E62-B758-F4AA63629328}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PL_Lernword</RootNamespace>
-    <AssemblyName>PL_Lernword</AssemblyName>
+    <RootNamespace>PL_Lernwort</RootNamespace>
+    <AssemblyName>PL_Lernwort</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,8 +51,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ManagerPanelDls.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -74,6 +78,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BAL_Lernwort\BAL_Lernwort.csproj">
+      <Project>{84cd2b87-1ad2-4e50-9e0f-d8956c1374b7}</Project>
+      <Name>BAL_Lernwort</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BO_Lernwort\BO_Lernwort.csproj">
+      <Project>{ab0767fe-69e0-468e-a72b-c1c7f13be740}</Project>
+      <Name>BO_Lernwort</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
