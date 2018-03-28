@@ -16,5 +16,7 @@ namespace BAL_Lernwort
         {
             return dataMngr.LernsetListeAuslesen();
         }
+
+        
     }
 }

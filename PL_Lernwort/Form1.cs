@@ -10,15 +10,46 @@ using System.Windows.Forms;
 
 namespace PL_Lernwort
 {
-    public partial class Lernwort : Form
+    public partial class Form1 : Form
     {
         private ManagerPanelDls mPanelDls = new ManagerPanelDls();
 
-        public Lernwort()
+        public Form1()
         {
             InitializeComponent();
+            
             mPanelDls.FillDataGridView(ref dgvLernsets);
            
+        }
+
+        private void NeuErstellenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BearbeitenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LernenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnStart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnBearbeiten_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnNeu_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

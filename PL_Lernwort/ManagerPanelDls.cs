@@ -43,6 +43,11 @@ namespace PL_Lernwort
             {
                 dgvLernsets.Rows.Add(l.LernsetID, l.Beschreibung, l.Lernsetstatus, l.Erstellt, l.Gelernt);
             }
+
+            if (dgvLernsets.RowCount>1)
+            {
+                dgvLernsets.Rows[0].Selected = true;
+            }
             
         }
     }

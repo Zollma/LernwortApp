@@ -16,7 +16,7 @@ namespace PL_Lernwort
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Lernwort());
+            Application.Run(new Form1());
         }
     }
 }
