@@ -17,15 +17,18 @@ namespace DAL_Lernwort
         private OleDbDataReader reader;
         private List<LernwortClass> listLernwort = new List<LernwortClass>();
         private List<LernsetClass> listLernset = new List<LernsetClass>();
-
+        
 
         public DataManager()
         {
             con.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0; " + "Data Source =" + strFilePathname;
-            cmd.Connection = con;
+            cmd.Connection = con;           
         }
 
-        public List<LernsetClass> LernsetListeAuslesen()
+        //----------------------------------------------------------------------------
+        // methods to get Data from table Lernset
+        //----------------------------------------------------------------------------
+        public List<LernsetClass> ReadListOfLernset()
         {
             cmd.CommandText = "SELECT * FROM Lernset";
 
@@ -56,11 +59,41 @@ namespace DAL_Lernwort
             reader.Close();
             con.Close();
 
-
             return listLernset;
         }
 
-        public List<LernwortClass> LernwLesen(int lstID)
+        public int GetCountLernedSets()
+        {
+            int count = 0;
+
+            cmd.CommandText = "SELECT COUNT (LernsetID) AS count_lrnID FROM Lernset WHERE Lernsetstatus = 'gelernt'";
+
+            try
+            {
+                con.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                  count = Convert.ToInt16(reader["count_lrnID"]);
+                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            reader.Close();
+            con.Close();
+
+            return count;
+        }
+
+        //----------------------------------------------------------------------------
+        // methods to get Data from table Lernwort
+        //----------------------------------------------------------------------------
+        public List<LernwortClass> ReadLernw(int lstID)
         {
             cmd.CommandText = "SELECT * FROM Lernwort WHERE LernsetID =" + lstID;
 
@@ -88,5 +121,33 @@ namespace DAL_Lernwort
 
             return listLernwort;
         }
+
+        public int GetCountLernwords()
+        {
+            int count = 0;
+
+            cmd.CommandText = "SELECT COUNT (WortID) AS count_wortID FROM Lernwort";
+
+            try
+            {
+                con.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    count = Convert.ToInt16(reader["count_wortID"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            reader.Close();
+            con.Close();
+
+            return count;
+        }
+
+
     }
 }

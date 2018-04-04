@@ -10,13 +10,34 @@ namespace BAL_Lernwort
 {
     public class BAL_Manager
     {
-        DataManager dataMngr = new DataManager();
+        private DataManager dataMngr = new DataManager();
+        private List<LernsetClass> listLrnset = new List<LernsetClass>();
 
-        public List<LernsetClass> GetDALLernsetListe()
+        public List<LernsetClass> GetDALLernsetList()
         {
-            return dataMngr.LernsetListeAuslesen();
+            listLrnset = dataMngr.ReadListOfLernset();
+            return listLrnset;
         }
 
-        
+        public int GetNumberOfLernsets()
+        {
+            int num = listLrnset.Count;
+            return num;
+        }
+
+        public int GetNumberOfLernwords()
+        {
+            int num = dataMngr.GetCountLernwords();
+            return num; 
+        }
+
+        public int GetPercentageLerned()
+        {
+            int percentage = 0;
+            int num = listLrnset.Count;
+            int numGlrnt = dataMngr.GetCountLernedSets();
+            percentage = numGlrnt * 100 / num;
+            return percentage;
+        }
     }
 }

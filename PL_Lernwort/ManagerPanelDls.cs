@@ -21,7 +21,7 @@ namespace PL_Lernwort
         {
             try
             {
-                ListLernsets = bmngr.GetDALLernsetListe();
+                ListLernsets = bmngr.GetDALLernsetList();
 
             }
             catch (Exception ex)
@@ -39,9 +39,19 @@ namespace PL_Lernwort
             dgvLernsets.Columns.Add("SpErstellt", "Erstellt");
             dgvLernsets.Columns.Add("SpGelernt", "Gelernt");
 
+            DateTime date = new DateTime();
+
             foreach (LernsetClass l in ListLernsets)
             {
-                dgvLernsets.Rows.Add(l.LernsetID, l.Beschreibung, l.Lernsetstatus, l.Erstellt, l.Gelernt);
+                if(l.Gelernt == date)
+                {
+                    dgvLernsets.Rows.Add(l.LernsetID, l.Beschreibung, l.Lernsetstatus, l.Erstellt.ToShortDateString(), "-");
+                }
+                else
+                {
+                    dgvLernsets.Rows.Add(l.LernsetID, l.Beschreibung, l.Lernsetstatus, l.Erstellt.ToShortDateString(), l.Gelernt.ToShortDateString());
+                }
+                
             }
 
             if (dgvLernsets.RowCount>1)
@@ -49,6 +59,16 @@ namespace PL_Lernwort
                 dgvLernsets.Rows[0].Selected = true;
             }
             
+        }
+
+        public void FillStatistikGpb(ref Label lblNumLrnst, ref Label lblNumLernwr, ref Label lblLerned)
+        {
+            string strLrnst = bmngr.GetNumberOfLernsets().ToString();
+            string strLernw = bmngr.GetNumberOfLernwords().ToString();
+            string strperc = bmngr.GetPercentageLerned().ToString();
+            lblNumLrnst.Text = "Lernsets: "+ strLrnst;
+            lblNumLernwr.Text = "Lernwörter: "+ strLernw;
+            lblLerned.Text = "Gelernt: " + strperc+" % ";
         }
     }
 }
