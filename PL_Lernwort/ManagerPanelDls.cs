@@ -10,11 +10,11 @@ using BO_Lernwort;
 
 namespace PL_Lernwort
 {
-    //a class to manage all things with the Panal panelDatalernset
+    //a class to manage all things with the Panel panelDataLernset
     class ManagerPanelDls
     {
         private List<LernsetClass> ListLernsets { get; set; }
-        // private DataGridView dgvLernsets = new DataGridView();
+        
         private BAL_Manager bmngr = new BAL_Manager();
 
         public ManagerPanelDls()
@@ -69,6 +69,20 @@ namespace PL_Lernwort
             lblNumLrnst.Text = "Lernsets: "+ strLrnst;
             lblNumLernwr.Text = "Lernwörter: "+ strLernw;
             lblLerned.Text = "Gelernt: " + strperc+" % ";
+        }
+
+        public List<int> GetSelectedIDs(DataGridView dgvLernsets)
+        {
+            DataGridViewSelectedRowCollection selectedRows = dgvLernsets.SelectedRows;
+            int count = selectedRows.Count;
+            List<int> li = new List<int>();
+
+            for (int i = 0; i < count; i++)
+            {
+                li.Add(Convert.ToInt32(dgvLernsets.SelectedRows[i].Cells[0].Value.ToString()));
+            }
+
+            return li;
         }
     }
 }

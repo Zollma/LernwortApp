@@ -93,7 +93,20 @@ namespace DAL_Lernwort
         //----------------------------------------------------------------------------
         // methods to get Data from table Lernwort
         //----------------------------------------------------------------------------
-        public List<LernwortClass> ReadLernw(int lstID)
+        public List<LernwortClass> GetListOfLernwords(List<int> lernsetId)
+        {
+            //empty the lernwordList 
+
+            //fill the lernwordList 
+            int count = lernsetId.Count;
+            for (int i = 0; i < count; i++)
+            {
+                ReadLernw(lernsetId[i]);
+            }
+                return listLernwort;
+        }
+        
+        private void ReadLernw(int lstID)
         {
             cmd.CommandText = "SELECT * FROM Lernwort WHERE LernsetID =" + lstID;
 
@@ -118,8 +131,6 @@ namespace DAL_Lernwort
 
             reader.Close();
             con.Close();
-
-            return listLernwort;
         }
 
         public int GetCountLernwords()
@@ -148,6 +159,78 @@ namespace DAL_Lernwort
             return count;
         }
 
+        public void EditLernword(string word, int wordID)
+        {
+            cmd.CommandText = "UPDATE Lernwort SET  Lernwort = '"+ word +"' WHERE WortID =" + wordID;
+            int count = 0;
+            try
+            {
+                con.Open();
+                count = cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        
+        }
 
+        public void DeleteLernword(string word)
+        {
+
+        }
+
+        public int NewLernword(string word, int lernsetID)
+        {
+            int newWrid = GetNewWordID();
+            cmd.CommandText = "INSERT INTO Lernwort (WortID, LernsetID, Lernwort, Lerndurchlauf) VALUES (" +newWrid+","+ lernsetID+",'"+ word+ "', 0)";
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return newWrid;
+        }
+
+        private int GetNewWordID()
+        {
+            int newWordID = 0;
+            int count = GetCountLernwords();
+            
+
+            cmd.CommandText = "SELECT * FROM Lernwort";
+
+            try
+            {
+                con.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int wordID = Convert.ToInt16(reader["WortID"]);
+                    if(wordID > newWordID)
+                    {
+                        newWordID = wordID;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            reader.Close();
+            con.Close();
+            newWordID++;
+
+            return newWordID; 
+        }
     }
 }

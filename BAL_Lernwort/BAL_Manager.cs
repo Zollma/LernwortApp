@@ -39,5 +39,23 @@ namespace BAL_Lernwort
             percentage = numGlrnt * 100 / num;
             return percentage;
         }
+
+        public List<LernwortClass> GetListOfLernwords(List<int> lernsetId)
+        {
+            List<LernwortClass> list = new List<LernwortClass>();
+            list = dataMngr.GetListOfLernwords(lernsetId); 
+            return list;
+        }
+
+        public void EditWord(string word, int wordID)
+        {
+            dataMngr.EditLernword(word, wordID);
+        }
+
+        public int NewWord(string word, int lernsetID)
+        {
+            return dataMngr.NewLernword(word, lernsetID);
+
+        }
     }
 }

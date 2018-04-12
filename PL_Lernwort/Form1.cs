@@ -13,6 +13,7 @@ namespace PL_Lernwort
     public partial class Form1 : Form
     {
         private ManagerPanelDls mPanelDls = new ManagerPanelDls();
+        private ManagerPanelDlws mPanelDlws = new ManagerPanelDlws();
 
         public Form1()
         {
@@ -20,7 +21,7 @@ namespace PL_Lernwort
             
             mPanelDls.FillDataGridView(ref dgvLernsets);
             mPanelDls.FillStatistikGpb(ref lblAnzLrnst, ref lblAnzLernwr, ref lblGelrnt);
-            
+            panelDataLernwords.Hide();
            
         }
 
@@ -54,6 +55,16 @@ namespace PL_Lernwort
             NeuesLernsetErstellen();
         }
 
+        private void LoeschenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LernsetLoeschen();
+        }
+
+        private void BtnLoeschen_Click(object sender, EventArgs e)
+        {
+            LernsetLoeschen();
+        }
+
         private void NeuesLernsetErstellen()
         {
 
@@ -61,12 +72,38 @@ namespace PL_Lernwort
 
         private void LernsetBearbeiten()
         {
-
+            mPanelDlws.FillDataGridView(ref dgvLernwords, mPanelDls.GetSelectedIDs(dgvLernsets));
+            panelDataLernwords.Show();
         }
 
         private void LernsetsLernen()
         {
 
+        }
+
+        private void LernsetLoeschen()
+        {
+
+        }
+        
+        private void DgvLernwords_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            string word = "" + dgvLernwords.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            int wordID = Convert.ToInt16(dgvLernwords.Rows[e.RowIndex].Cells[e.ColumnIndex+2].Value);
+            if (wordID == 0)
+            {
+                dgvLernwords.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value = 0;
+                int lernsetID = 0;
+                lernsetID = Convert.ToInt16(dgvLernwords.Rows[e.RowIndex-1].Cells[e.ColumnIndex + 3].Value);
+                wordID = mPanelDlws.NewWord(word, lernsetID);
+                dgvLernwords.Rows[e.RowIndex].Cells[e.ColumnIndex + 2].Value = wordID;
+            }
+            else
+            {
+                mPanelDlws.EditWord(word, wordID);
+            }
+            
+           
         }
     }
 }
