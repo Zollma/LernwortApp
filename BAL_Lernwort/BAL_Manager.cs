@@ -57,5 +57,10 @@ namespace BAL_Lernwort
             return dataMngr.NewLernword(word, lernsetID);
 
         }
+
+        public bool DeleteWord(int wordID)
+        {
+            return dataMngr.DeleteLernword(wordID);
+        }
     }
 }

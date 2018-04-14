@@ -34,8 +34,8 @@ namespace PL_Lernwort
             }
 
             dgvLernwords.Columns[1].ReadOnly = true;
-            dgvLernwords.Columns[2].Visible = false;
-            dgvLernwords.Columns[3].Visible = false;
+            dgvLernwords.Columns[2].Visible = true;
+            dgvLernwords.Columns[3].Visible = true;
         }
 
         public void EditWord(string word, int wordID )
@@ -46,6 +46,15 @@ namespace PL_Lernwort
         public int NewWord(string word, int lernsetID)
         {
             return bmngr.NewWord(word, lernsetID);
+        }
+
+        public void DeleteWord(int wordID)
+        {
+            bool blDeleted = bmngr.DeleteWord(wordID);
+            if(blDeleted)
+            {
+                MessageBox.Show("Datensatz aus der Datenbank gelöscht");
+            }
         }
     }
 }

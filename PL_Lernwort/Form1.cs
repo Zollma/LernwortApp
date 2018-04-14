@@ -27,83 +27,121 @@ namespace PL_Lernwort
 
         private void NeuErstellenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NeuesLernsetErstellen();
+            CreateNewLernset();
         }
 
         private void BearbeitenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LernsetBearbeiten();
+            EditLernset();
         }
 
         private void LernenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LernsetsLernen();
+            LerningLernsets();
         }
 
         private void BtnStart_Click(object sender, EventArgs e)
         {
-            LernsetsLernen();
+            LerningLernsets();
         }
 
         private void BtnBearbeiten_Click(object sender, EventArgs e)
         {
-            LernsetBearbeiten();
+            EditLernset();
         }
 
         private void BtnNeu_Click(object sender, EventArgs e)
         {
-            NeuesLernsetErstellen();
+            CreateNewLernset();
         }
 
         private void LoeschenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LernsetLoeschen();
+            DeleteLernset();
         }
 
         private void BtnLoeschen_Click(object sender, EventArgs e)
         {
-            LernsetLoeschen();
+            DeleteLernset();
         }
 
-        private void NeuesLernsetErstellen()
+        private void CreateNewLernset()
         {
 
         }
 
-        private void LernsetBearbeiten()
+        private void EditLernset()
         {
             mPanelDlws.FillDataGridView(ref dgvLernwords, mPanelDls.GetSelectedIDs(dgvLernsets));
             panelDataLernwords.Show();
         }
 
-        private void LernsetsLernen()
+        private void LerningLernsets()
         {
 
         }
 
-        private void LernsetLoeschen()
+        private void DeleteLernset()
         {
 
+        }
+
+        private void DeleteLernword(int wordID)
+        {
+            mPanelDlws.DeleteWord(wordID);
         }
         
         private void DgvLernwords_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             string word = "" + dgvLernwords.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-            int wordID = Convert.ToInt16(dgvLernwords.Rows[e.RowIndex].Cells[e.ColumnIndex+2].Value);
+            int wordID = Convert.ToInt16(dgvLernwords.Rows[e.RowIndex].Cells[2].Value);
+            //Add new Lernword
             if (wordID == 0)
             {
-                dgvLernwords.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value = 0;
+                dgvLernwords.Rows[e.RowIndex].Cells[1].Value = 0;
                 int lernsetID = 0;
-                lernsetID = Convert.ToInt16(dgvLernwords.Rows[e.RowIndex-1].Cells[e.ColumnIndex + 3].Value);
+                lernsetID = Convert.ToInt16(dgvLernwords.Rows[e.RowIndex-1].Cells[3].Value);
+                dgvLernwords.Rows[e.RowIndex].Cells[3].Value = lernsetID;
                 wordID = mPanelDlws.NewWord(word, lernsetID);
-                dgvLernwords.Rows[e.RowIndex].Cells[e.ColumnIndex + 2].Value = wordID;
+                dgvLernwords.Rows[e.RowIndex].Cells[2].Value = wordID;
             }
             else
             {
-                mPanelDlws.EditWord(word, wordID);
+                //Delete Lernword and the entrys of the row
+                if (word == "")
+                {
+                    dgvLernwords.Rows[e.RowIndex].Cells[1].Value = "";
+                    dgvLernwords.Rows[e.RowIndex].Cells[2].Value = "";
+                    dgvLernwords.Rows[e.RowIndex].Cells[3].Value = "";
+                    DeleteLernword(wordID);
+                }
+                else
+                {
+                    //Change the Lernword
+                    mPanelDlws.EditWord(word, wordID);
+                }
+               
+            }           
+        }
+
+        
+
+        private void DgvLernwords_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            int wortID = Convert.ToInt16(dgvLernwords.SelectedRows[0].Cells[2].Value);
+
+            DialogResult dr = MessageBox.Show("Wollen Sie dieses Lernwort wirklich löschen?","Achtung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if(dr == DialogResult.Yes)
+                DeleteLernword(wortID);
+            else
+            {
+                e.Cancel = true;
             }
-            
-           
+        }
+
+        private void BtnFertig_Click(object sender, EventArgs e)
+        {
+            panelDataLernwords.Hide();
         }
     }
 }

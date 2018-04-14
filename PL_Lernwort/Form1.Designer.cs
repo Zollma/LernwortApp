@@ -30,6 +30,7 @@
         {
             this.panelDataLernset = new System.Windows.Forms.Panel();
             this.panelDataLernwords = new System.Windows.Forms.Panel();
+            this.btnFertig = new System.Windows.Forms.Button();
             this.dgvLernwords = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblGelrnt = new System.Windows.Forms.Label();
@@ -74,11 +75,22 @@
             // 
             // panelDataLernwords
             // 
+            this.panelDataLernwords.Controls.Add(this.btnFertig);
             this.panelDataLernwords.Controls.Add(this.dgvLernwords);
-            this.panelDataLernwords.Location = new System.Drawing.Point(22, 284);
+            this.panelDataLernwords.Location = new System.Drawing.Point(22, 147);
             this.panelDataLernwords.Name = "panelDataLernwords";
-            this.panelDataLernwords.Size = new System.Drawing.Size(719, 353);
+            this.panelDataLernwords.Size = new System.Drawing.Size(742, 490);
             this.panelDataLernwords.TabIndex = 6;
+            // 
+            // btnFertig
+            // 
+            this.btnFertig.Location = new System.Drawing.Point(580, 62);
+            this.btnFertig.Name = "btnFertig";
+            this.btnFertig.Size = new System.Drawing.Size(117, 28);
+            this.btnFertig.TabIndex = 1;
+            this.btnFertig.Text = "fertig";
+            this.btnFertig.UseVisualStyleBackColor = true;
+            this.btnFertig.Click += new System.EventHandler(this.BtnFertig_Click);
             // 
             // dgvLernwords
             // 
@@ -87,9 +99,10 @@
             this.dgvLernwords.Location = new System.Drawing.Point(0, 0);
             this.dgvLernwords.Name = "dgvLernwords";
             this.dgvLernwords.RowTemplate.Height = 24;
-            this.dgvLernwords.Size = new System.Drawing.Size(334, 353);
+            this.dgvLernwords.Size = new System.Drawing.Size(574, 490);
             this.dgvLernwords.TabIndex = 0;
             this.dgvLernwords.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvLernwords_CellEndEdit);
+            this.dgvLernwords.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.DgvLernwords_UserDeletingRow);
             // 
             // groupBox2
             // 
@@ -309,6 +322,7 @@
         private System.Windows.Forms.DataGridView dgvLernwords;
         private System.Windows.Forms.Button btnLoeschen;
         private System.Windows.Forms.ToolStripMenuItem löschenToolStripMenuItem;
+        private System.Windows.Forms.Button btnFertig;
     }
 }
 

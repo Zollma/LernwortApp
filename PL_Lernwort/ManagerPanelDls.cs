@@ -79,7 +79,7 @@ namespace PL_Lernwort
 
             for (int i = 0; i < count; i++)
             {
-                li.Add(Convert.ToInt32(dgvLernsets.SelectedRows[i].Cells[0].Value.ToString()));
+                li.Add(Convert.ToInt32(dgvLernsets.SelectedRows[i].Cells[0].Value));
             }
 
             return li;

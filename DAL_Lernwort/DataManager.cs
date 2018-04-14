@@ -176,10 +176,7 @@ namespace DAL_Lernwort
         
         }
 
-        public void DeleteLernword(string word)
-        {
-
-        }
+        
 
         public int NewLernword(string word, int lernsetID)
         {
@@ -231,6 +228,27 @@ namespace DAL_Lernwort
             newWordID++;
 
             return newWordID; 
+        }
+
+        public bool DeleteLernword(int wordID)
+        {
+            bool blDeleted = false;
+            cmd.CommandText = "DELETE FROM Lernwort WHERE WortID =" + wordID;
+            try
+            {
+                con.Open();
+                int deletedNum = cmd.ExecuteNonQuery();
+                if(deletedNum > 0)
+                {
+                    blDeleted = true;
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return blDeleted;
         }
     }
 }
