@@ -63,12 +63,19 @@ namespace PL_Lernwort
 
         public void FillStatistikGpb(ref Label lblNumLrnst, ref Label lblNumLernwr, ref Label lblLerned)
         {
-            string strLrnst = bmngr.GetNumberOfLernsets().ToString();
-            string strLernw = bmngr.GetNumberOfLernwords().ToString();
-            string strperc = bmngr.GetPercentageLerned().ToString();
-            lblNumLrnst.Text = "Lernsets: "+ strLrnst;
-            lblNumLernwr.Text = "Lernwörter: "+ strLernw;
-            lblLerned.Text = "Gelernt: " + strperc+" % ";
+            try
+            {
+                string strLrnst = bmngr.GetNumberOfLernsets().ToString();
+                string strLernw = bmngr.GetNumberOfLernwords().ToString();
+                string strperc = bmngr.GetPercentageLerned().ToString();
+                lblNumLrnst.Text = "Lernsets: " + strLrnst;
+                lblNumLernwr.Text = "Lernwörter: " + strLernw;
+                lblLerned.Text = "Gelernt: " + strperc + " % ";
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public List<int> GetSelectedIDs(DataGridView dgvLernsets)
@@ -83,6 +90,23 @@ namespace PL_Lernwort
             }
 
             return li;
+        }
+
+        public void DeleteLernset(List<int> lernsetID)
+        {
+            try
+            {
+                int countDeleted = bmngr.DeleteLernset(lernsetID);
+                if (countDeleted>0)
+                {
+                    string message = Convert.ToString(countDeleted);
+                    MessageBox.Show("Datensatz aus der Datenbank gelöscht: " + message);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

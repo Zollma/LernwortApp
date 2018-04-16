@@ -90,6 +90,39 @@ namespace DAL_Lernwort
             return count;
         }
 
+        private bool DeleteLernset(int lernsetID)
+        {
+            bool blDeleted = false;
+           /* cmd.CommandText = "DELETE FROM Lernset INNER JOIN Lernwort ON Lernset.LernsetID = Lernwort.LernsetID WHERE LernsetID =" + lernsetID;
+            try
+            {
+                con.Open();
+                int deletedNum = cmd.ExecuteNonQuery();
+                if (deletedNum > 0)
+                {
+                    blDeleted = true;
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }*/
+
+            return blDeleted;
+        }
+
+        public int DeleteLernsets(List<int> lernsetId)
+        {
+            int countDeleted = 0;
+            int count = lernsetId.Count;
+            for (int i = 0; i < count; i++)
+            {
+                if (DeleteLernset(lernsetId[i]))
+                    countDeleted++;
+            }
+            return countDeleted;
+        }
         //----------------------------------------------------------------------------
         // methods to get Data from table Lernwort
         //----------------------------------------------------------------------------
@@ -173,7 +206,6 @@ namespace DAL_Lernwort
             {
                 throw ex;
             }
-        
         }
 
         
@@ -248,6 +280,8 @@ namespace DAL_Lernwort
             {
                 throw ex;
             }
+
+            
             return blDeleted;
         }
     }

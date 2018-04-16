@@ -83,7 +83,7 @@ namespace PL_Lernwort
 
         private void DeleteLernset()
         {
-
+            mPanelDls.DeleteLernset(mPanelDls.GetSelectedIDs(dgvLernsets));
         }
 
         private void DeleteLernword(int wordID)

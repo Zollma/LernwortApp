@@ -25,6 +25,12 @@ namespace BAL_Lernwort
             return num;
         }
 
+        public int DeleteLernset(List<int> lernsetId)
+        {
+            return dataMngr.DeleteLernsets(lernsetId);
+        }
+        //-------------------------Lernwords Handeling---------------------------------------
+
         public int GetNumberOfLernwords()
         {
             int num = dataMngr.GetCountLernwords();

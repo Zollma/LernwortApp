@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BAL_Lernwort;
 using BO_Lernwort;
@@ -26,7 +23,15 @@ namespace PL_Lernwort
             dgvLernwords.Columns.Add("SpLerndurchlauf", "Lerndurchlauf");
             dgvLernwords.Columns.Add("SpWordID", "WortID");
             dgvLernwords.Columns.Add("SpLernsetID", "LernsetID");
-            ListLernwords = bmngr.GetListOfLernwords(lernsetID);
+
+            try
+            { 
+                ListLernwords = bmngr.GetListOfLernwords(lernsetID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             foreach (LernwortClass l in ListLernwords)
             {
@@ -40,20 +45,43 @@ namespace PL_Lernwort
 
         public void EditWord(string word, int wordID )
         {
-           bmngr.EditWord(word, wordID);
+            try
+            {
+                bmngr.EditWord(word, wordID);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public int NewWord(string word, int lernsetID)
         {
-            return bmngr.NewWord(word, lernsetID);
+            int value = 0;
+            try
+            {
+                value = bmngr.NewWord(word, lernsetID);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return value;
         }
 
         public void DeleteWord(int wordID)
         {
-            bool blDeleted = bmngr.DeleteWord(wordID);
-            if(blDeleted)
+            try
             {
-                MessageBox.Show("Datensatz aus der Datenbank gelöscht");
+                bool blDeleted = bmngr.DeleteWord(wordID);
+                if (blDeleted)
+                {
+                    MessageBox.Show("Datensatz aus der Datenbank gelöscht");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
