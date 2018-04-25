@@ -29,6 +29,11 @@ namespace BAL_Lernwort
         {
             return dataMngr.DeleteLernsets(lernsetId);
         }
+
+        public LernsetClass NewLernset(string bschrbng)
+        {
+            return dataMngr.GetNewLernset(bschrbng);
+        }
         //-------------------------Lernwords Handeling---------------------------------------
 
         public int GetNumberOfLernwords()

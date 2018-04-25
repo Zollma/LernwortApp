@@ -93,11 +93,14 @@ namespace DAL_Lernwort
         private bool DeleteLernset(int lernsetID)
         {
             bool blDeleted = false;
-           /* cmd.CommandText = "DELETE FROM Lernset INNER JOIN Lernwort ON Lernset.LernsetID = Lernwort.LernsetID WHERE LernsetID =" + lernsetID;
+            cmd.CommandText = "DELETE * FROM Lernwort WHERE LernsetID =" + lernsetID;
             try
             {
                 con.Open();
                 int deletedNum = cmd.ExecuteNonQuery();
+               
+                cmd.CommandText = "DELETE * FROM Lernset WHERE LernsetID =" + lernsetID;
+                deletedNum = cmd.ExecuteNonQuery();
                 if (deletedNum > 0)
                 {
                     blDeleted = true;
@@ -107,7 +110,7 @@ namespace DAL_Lernwort
             catch (Exception ex)
             {
                 throw ex;
-            }*/
+            }
 
             return blDeleted;
         }
@@ -122,6 +125,66 @@ namespace DAL_Lernwort
                     countDeleted++;
             }
             return countDeleted;
+        }
+
+        public LernsetClass GetNewLernset(string bschrbng)
+        {
+            int lernsetID = GetNewLernsetID();
+            string lernsetstatus = LernsetClass.UNGELERNT;
+            DateTime erstellt = new DateTime();
+            erstellt = DateTime.Today;
+            DateTime gelernt  = new DateTime();
+
+            
+            cmd.CommandText = "INSERT INTO Lernset (LernsetID, Beschreibung, Lernsetstatus, Erstellt, Gelernt) VALUES (" + lernsetID + ",'" + bschrbng + "', '" +lernsetstatus+ "','"+ erstellt+ "','"+ gelernt+"')";
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            
+            LernsetClass lernset = new LernsetClass(lernsetID, bschrbng, lernsetstatus, erstellt, gelernt);
+
+            return lernset;
+        }
+
+        private int GetNewLernsetID()
+        {
+            int newlernsetID = 0;
+            
+            cmd.CommandText = "SELECT * FROM Lernset";
+
+            try
+            {
+                con.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int lernsetID = Convert.ToInt16(reader["LernsetID"]);
+                    if (lernsetID > newlernsetID)
+                    {
+                        newlernsetID = lernsetID;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            reader.Close();
+            con.Close();
+            newlernsetID++;
+
+
+            return newlernsetID;
         }
         //----------------------------------------------------------------------------
         // methods to get Data from table Lernwort
@@ -208,8 +271,6 @@ namespace DAL_Lernwort
             }
         }
 
-        
-
         public int NewLernword(string word, int lernsetID)
         {
             int newWrid = GetNewWordID();
@@ -231,9 +292,7 @@ namespace DAL_Lernwort
         private int GetNewWordID()
         {
             int newWordID = 0;
-            int count = GetCountLernwords();
             
-
             cmd.CommandText = "SELECT * FROM Lernwort";
 
             try

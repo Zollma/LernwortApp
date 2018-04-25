@@ -30,7 +30,7 @@
         {
             this.panelDataLernset = new System.Windows.Forms.Panel();
             this.panelDataLernwords = new System.Windows.Forms.Panel();
-            this.btnFertig = new System.Windows.Forms.Button();
+            this.btnFertigStellen = new System.Windows.Forms.Button();
             this.dgvLernwords = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblGelrnt = new System.Windows.Forms.Label();
@@ -75,22 +75,22 @@
             // 
             // panelDataLernwords
             // 
-            this.panelDataLernwords.Controls.Add(this.btnFertig);
+            this.panelDataLernwords.Controls.Add(this.btnFertigStellen);
             this.panelDataLernwords.Controls.Add(this.dgvLernwords);
             this.panelDataLernwords.Location = new System.Drawing.Point(22, 147);
             this.panelDataLernwords.Name = "panelDataLernwords";
             this.panelDataLernwords.Size = new System.Drawing.Size(742, 490);
             this.panelDataLernwords.TabIndex = 6;
             // 
-            // btnFertig
+            // btnFertigStellen
             // 
-            this.btnFertig.Location = new System.Drawing.Point(580, 62);
-            this.btnFertig.Name = "btnFertig";
-            this.btnFertig.Size = new System.Drawing.Size(117, 28);
-            this.btnFertig.TabIndex = 1;
-            this.btnFertig.Text = "fertig";
-            this.btnFertig.UseVisualStyleBackColor = true;
-            this.btnFertig.Click += new System.EventHandler(this.BtnFertig_Click);
+            this.btnFertigStellen.Location = new System.Drawing.Point(600, 62);
+            this.btnFertigStellen.Name = "btnFertigStellen";
+            this.btnFertigStellen.Size = new System.Drawing.Size(117, 28);
+            this.btnFertigStellen.TabIndex = 1;
+            this.btnFertigStellen.Text = "Fertig stellen";
+            this.btnFertigStellen.UseVisualStyleBackColor = true;
+            this.btnFertigStellen.Click += new System.EventHandler(this.BtnFertig_Click);
             // 
             // dgvLernwords
             // 
@@ -223,6 +223,7 @@
             this.dgvLernsets.RowTemplate.Height = 24;
             this.dgvLernsets.Size = new System.Drawing.Size(935, 649);
             this.dgvLernsets.TabIndex = 0;
+            this.dgvLernsets.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvLernsets_CellClick);
             // 
             // menuStrip1
             // 
@@ -322,7 +323,7 @@
         private System.Windows.Forms.DataGridView dgvLernwords;
         private System.Windows.Forms.Button btnLoeschen;
         private System.Windows.Forms.ToolStripMenuItem löschenToolStripMenuItem;
-        private System.Windows.Forms.Button btnFertig;
+        private System.Windows.Forms.Button btnFertigStellen;
     }
 }
 

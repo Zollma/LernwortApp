@@ -14,6 +14,7 @@ namespace PL_Lernwort
     {
         private ManagerPanelDls mPanelDls = new ManagerPanelDls();
         private ManagerPanelDlws mPanelDlws = new ManagerPanelDlws();
+        private DialogNewLernset newLernsetDialog;
 
         public Form1()
         {
@@ -22,7 +23,6 @@ namespace PL_Lernwort
             mPanelDls.FillDataGridView(ref dgvLernsets);
             mPanelDls.FillStatistikGpb(ref lblAnzLrnst, ref lblAnzLernwr, ref lblGelrnt);
             panelDataLernwords.Hide();
-           
         }
 
         private void NeuErstellenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,13 +61,16 @@ namespace PL_Lernwort
         }
 
         private void BtnLoeschen_Click(object sender, EventArgs e)
-        {
+        {   
             DeleteLernset();
         }
 
         private void CreateNewLernset()
         {
-
+            newLernsetDialog = new DialogNewLernset(ref mPanelDls, ref dgvLernsets);
+            
+            newLernsetDialog.Show();
+            //this.Enabled = false;
         }
 
         private void EditLernset()
@@ -83,7 +86,10 @@ namespace PL_Lernwort
 
         private void DeleteLernset()
         {
-            mPanelDls.DeleteLernset(mPanelDls.GetSelectedIDs(dgvLernsets));
+            DialogResult dr = MessageBox.Show("Wollen Sie dieses Lernwort wirklich löschen?", "Achtung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+                mPanelDls.DeleteLernset(ref dgvLernsets, mPanelDls.GetSelectedIDs(dgvLernsets));
+           
         }
 
         private void DeleteLernword(int wordID)
@@ -143,5 +149,13 @@ namespace PL_Lernwort
         {
             panelDataLernwords.Hide();
         }
+
+        private void DgvLernsets_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int row = e.RowIndex;
+            dgvLernsets.Rows[row].Selected = true;
+        }
+
+        
     }
 }

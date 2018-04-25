@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BAL_Lernwort;
 using BO_Lernwort;
@@ -11,10 +8,10 @@ using BO_Lernwort;
 namespace PL_Lernwort
 {
     //a class to manage all things with the Panel panelDataLernset
-    class ManagerPanelDls
+    public class ManagerPanelDls
     {
         private List<LernsetClass> ListLernsets { get; set; }
-        
+
         private BAL_Manager bmngr = new BAL_Manager();
 
         public ManagerPanelDls()
@@ -30,7 +27,7 @@ namespace PL_Lernwort
             }
         }
 
-       
+
         public void FillDataGridView(ref DataGridView dgvLernsets)
         {
             dgvLernsets.Columns.Add("SpLernsetID", "LernsetID");
@@ -39,11 +36,16 @@ namespace PL_Lernwort
             dgvLernsets.Columns.Add("SpErstellt", "Erstellt");
             dgvLernsets.Columns.Add("SpGelernt", "Gelernt");
 
-            DateTime date = new DateTime();
+            int columnscount = dgvLernsets.ColumnCount;
+
+            for (int i = 0; i < columnscount; i++)
+            {
+                dgvLernsets.Columns[i].ReadOnly = true;
+            }
 
             foreach (LernsetClass l in ListLernsets)
             {
-                if(l.Gelernt == date)
+                if (l.Gelernt < l.Erstellt)
                 {
                     dgvLernsets.Rows.Add(l.LernsetID, l.Beschreibung, l.Lernsetstatus, l.Erstellt.ToShortDateString(), "-");
                 }
@@ -51,15 +53,16 @@ namespace PL_Lernwort
                 {
                     dgvLernsets.Rows.Add(l.LernsetID, l.Beschreibung, l.Lernsetstatus, l.Erstellt.ToShortDateString(), l.Gelernt.ToShortDateString());
                 }
-                
+
             }
 
-            if (dgvLernsets.RowCount>1)
+            if (dgvLernsets.RowCount > 1)
             {
                 dgvLernsets.Rows[0].Selected = true;
             }
-            
+
         }
+
 
         public void FillStatistikGpb(ref Label lblNumLrnst, ref Label lblNumLernwr, ref Label lblLerned)
         {
@@ -72,7 +75,7 @@ namespace PL_Lernwort
                 lblNumLernwr.Text = "Lernwörter: " + strLernw;
                 lblLerned.Text = "Gelernt: " + strperc + " % ";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -92,13 +95,24 @@ namespace PL_Lernwort
             return li;
         }
 
-        public void DeleteLernset(List<int> lernsetID)
+        public void DeleteLernset(ref DataGridView dgvLernsets, List<int> lernsetID)
         {
             try
             {
                 int countDeleted = bmngr.DeleteLernset(lernsetID);
-                if (countDeleted>0)
+                if (countDeleted > 0)
                 {
+                    DataGridViewSelectedRowCollection selectedRows = dgvLernsets.SelectedRows;
+                    int countRows = selectedRows.Count;
+                    int countCells = dgvLernsets.ColumnCount;
+                    for (int i = 0; i < countRows; i++)
+                    {
+                        for (int j = 0; j < countCells; j++)
+                        {
+                            dgvLernsets.SelectedRows[i].Cells[j].Value = "";
+                        }
+
+                    }
                     string message = Convert.ToString(countDeleted);
                     MessageBox.Show("Datensatz aus der Datenbank gelöscht: " + message);
                 }
@@ -108,5 +122,27 @@ namespace PL_Lernwort
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public LernsetClass NewLernset(string bschrbng)
+        {
+
+            LernsetClass lernset = new LernsetClass();
+            try
+            {
+                lernset = bmngr.NewLernset(bschrbng);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return lernset;
+        }
+
+        public void AddLernsetToDgv(ref DataGridView dgvLernsets, LernsetClass lrnst)
+        {
+            dgvLernsets.Rows.Add(lrnst.LernsetID, lrnst.Beschreibung, lrnst.Lernsetstatus, lrnst.Erstellt.ToShortDateString(), "-");
+        }
+
+
     }
 }
